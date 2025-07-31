@@ -1,5 +1,4 @@
 const container = document.querySelector(".container")
-
 const btn = document.querySelector(".grid-size")
 
 btn.addEventListener("click", () => {
@@ -22,9 +21,17 @@ btn.addEventListener("click", () => {
         square.classList.add('square');
         square.style.width = `${squareSize}%`;
         square.style.height = `${squareSize}%`;
+        square.dataset.darkness = 0
         square.addEventListener("mouseover", () => {
-            square.style.backgroundColor = "lightgreen";
-        });
+            let darkness = Number(square.dataset.darkness);
+            if (darkness < 10) {
+                darkness += 1;
+                square.dataset.darkness = darkness;
+                // const r = Math.floor(Math.random() * 256); // 0–255
+                // const g = Math.floor(Math.random() * 256);
+                // const b = Math.floor(Math.random() * 256);
+                square.style.backgroundColor = `rgba(0, 0, 0, ${darkness / 10})`;
+        }});
         container.appendChild(square);
     }
 });

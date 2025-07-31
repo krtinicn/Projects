@@ -15,7 +15,8 @@ body {
 }
 
 .square {
-    background-color: brown;
+    border: 1px solid black;
+    box-sizing: border-box;
 }
 
 button {
