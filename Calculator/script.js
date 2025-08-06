@@ -2,28 +2,40 @@ const display = document.querySelector(".display")
 const btn = document.querySelectorAll(".btn")
 const clear = document.querySelector(".clear")
 const equal = document.querySelector(".btn_eql")
+const del = document.querySelector(".delete")
 display.textContent = "0"
 
 
-let a = ""
-let b = ""
-let operator = ""
+let a = "";
+let b = "";
+let operator = "";
 let isOperatorClicked = false;
+let justCalculated = false;
 
 btn.forEach(button => {
     button.addEventListener("click", () => {
         const value = button.getAttribute("data-value");
+
+        if (justCalculated && !["+", "-", "*", "/"].includes(value)) {
+            a = "";
+            b = "";
+            operator = "";
+            isOperatorClicked = false;
+            display.textContent = "";
+            justCalculated = false;
+        }
+
         if (["+", "-", "*", "/"].includes(value)) {
-            // If a, b, and operator are set, calculate intermediate result
-            if (a !== "" && b !== "" && operator !== "") {
-                const result = operate(Number(a), Number(b), operator);
-                a = result.toString();
-                b = "";
-                display.textContent = a + value;
-            }
             if (a === "") return;
             operator = value;
             isOperatorClicked = true;
+            justCalculated = false;
+        } else if (value === ".") {
+            if (!isOperatorClicked) {
+                if (!a.includes(".")) a += value;
+            } else {
+                if (!b.includes(".")) b += value;
+            }
         } else {
             if (!isOperatorClicked) {
                 a += value;
@@ -31,23 +43,22 @@ btn.forEach(button => {
                 b += value;
             }
         }
-        // Show full expression
         display.textContent = a + (operator ? operator : "") + b;
     });
 });
 
 equal.addEventListener("click", () => {
     if (a !== "" && b !== "" && operator !== "") {
-        const result = operate(Number(a), Number(b), operator);
-        display.textContent = result;
-        // Reset for next calculation
-        if (b === "0") {
-        display.textContent = "Sorry, cant divide with 0"
+        if (operator === "/" && b === "0") {
+            display.textContent = "Sorry, cant divide with 0";
         } else {
-        a = ""
-        b = "";
-        operator = "";
-        isOperatorClicked = false;
+            const result = operate(Number(a), Number(b), operator);
+            display.textContent = result;
+            a = result.toString();
+            b = "";
+            operator = "";
+            isOperatorClicked = false;
+            justCalculated = true; // Set flag after calculation
         }
     }
 });
@@ -58,7 +69,22 @@ clear.addEventListener("click", () => {
     b = "";
     operator = "";
     isOperatorClicked = false;
+    justCalculated = false;
 });
+
+del.addEventListener("click", () => {
+    if (justCalculated) return;
+    if(!isOperatorClicked) {
+        a = a.slice(0, -1)
+    } else {
+        b = b.slice(0, -1)
+    }
+    if (a === "" && b === "") {
+        display.textContent = "0";
+    } else {
+        display.textContent = a + (operator ? operator : "") + b;
+    }
+})
 
 function add (a, b) {
     return a + b

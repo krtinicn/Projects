@@ -1,3 +1,61 @@
 h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(46, 46, 46);
+    padding: 8px;
+    max-width: 250px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+button {
+    display: flex;
+    height: 60px;
+    width: 60px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 24px;
+    background-color: aquamarine;
+    flex-grow: 1;
+}
+
+button.btn_eql {
+    width: 122px;
+}
+
+.display {
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: aqua;
+    width: 92%;
+    height: 100%;
+    text-align: end;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 32px;
+}
+
+.clear {
+    width: 123px;
+}
+
+
