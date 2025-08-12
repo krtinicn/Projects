@@ -3,6 +3,10 @@ h1 {
     text-align: center;
 }
 
+h1::selection {
+    background-color: blueviolet;
+}
+
 body {
     display: flex;
     flex-direction: column;
